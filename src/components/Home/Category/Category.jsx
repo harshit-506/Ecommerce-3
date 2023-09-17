@@ -1,29 +1,28 @@
-import React from 'react'
+import { useNavigate } from "react-router-dom";
 import "./Category.scss";
-import download1 from "../../../assets/category/download-1.jpeg"
-import download2 from "../../../assets/category/download-2.jpeg"
-import download3 from "../../../assets/category/download-3.jpg"
-import download4 from "../../../assets/category/download-4.jpeg"
-function Category() {
-  return (
-    <div className='shop-by-category'>
-      <div className='categories'>
-        <div className='category'>
-             <img src={download1} alt="" />
-        </div>
-        <div className='category'>
-             <img src={download2} alt="" />
-        </div>
-        <div className='category'>
-             <img src={download3} alt="" />
-        </div>
-        <div className='category'>
-             <img src={download4} alt="" />
-        </div>
-      </div>
-    </div>
-     
-  )
-}
 
-export default Category
+const Category = ({ categories }) => {
+    const navigate = useNavigate();
+    return (
+        <div className="shop-by-category">
+            <div className="categories">
+                {categories?.data?.map((item) => (
+                    <div
+                        key={item.id}
+                        className="category"
+                        onClick={() => navigate(`/category/${item.id}`)}
+                    >
+                        <img
+                            src={
+                                process.env.REACT_APP_STRIPE_APP_DEV_URL +
+                                item.attributes.img.data.attributes.url
+                            }
+                        />
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+export default Category;
